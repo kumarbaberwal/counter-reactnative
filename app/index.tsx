@@ -1,20 +1,22 @@
-import { useState } from "react";
-import { Button, Pressable, StyleSheet, Text, View } from "react-native";
+import { decrement, increment, reset } from "@/features/counter/counterSlice";
+import { RootState } from "@/store/store";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Index() {
-
-    const [count, setCount] = useState(0);
+    const count = useSelector((state: RootState) => state.counter.value)
+    const dispatch = useDispatch()
 
     const increament = () => {
-        setCount(count => count + 1);
+        dispatch(increment())
     }
 
     const decreament = () => {
-        setCount(count => count - 1);
+        dispatch(decrement())
     }
 
-    const reset = () => {
-        setCount(0);
+    const resetCount = () => {
+        dispatch(reset())
     }
 
     return <View
@@ -50,7 +52,7 @@ export default function Index() {
             </Pressable>
         </View>
         <Pressable
-            onPress={reset}
+            onPress={resetCount}
             style={[styles.button, { width: '85%', margin: 30 }]}
         >
             <Text
